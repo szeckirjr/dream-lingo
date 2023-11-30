@@ -9,6 +9,8 @@ import { useState } from 'react';
 import HomePage from '../../components/HomePage';
 import Listening from '../../components/Listening';
 import Scenarios from '../../components/ScenariosPage';
+import RandomAudioWaves from '../../components/RandomAudioWaves';
+import Conversations from '../../components/Conversations';
 
 export type PossiblePages = 'index' | 'listening' | 'conversations' | 'scenario';
 
@@ -30,6 +32,7 @@ export default function TabOneScreen() {
       </Pressable>}
       {screen === 'listening' && <Listening />}
       {screen === 'scenario' && <Scenarios />}
+      {screen === 'conversations' && <Conversations />}
     </SafeAreaView>
   );
 }
