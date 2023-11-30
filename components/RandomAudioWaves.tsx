@@ -1,10 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { View, StyleSheet, Animated } from "react-native";
 
-export default function RandomAudioWaves() {
-    const waveAnimRefs = Array.from({ length: 8 }, () => useRef(new Animated.Value(40)).current);
+export default function RandomAudioWaves({playing, setPlaying}: {
+    playing: boolean;
+    setPlaying: (playing: boolean) => void;
+}) {
+    const waveAnimRefs = Array.from({ length: 8 }, () => useRef(new Animated.Value(20)).current);
 
     useEffect(() => {
+        if(playing) {
         waveAnimRefs.forEach((anim, index) => {
             const minWaveHeight = index % 2 === 0 ? 50 : 40;
             const sequence = [
@@ -22,7 +26,12 @@ export default function RandomAudioWaves() {
 
             Animated.loop(Animated.sequence(sequence)).start();
         });
-    }, []); // Empty dependency array to run only once
+    } else {
+        waveAnimRefs.forEach((anim) => {
+            anim.setValue(20); // Reset to initial value when not playing
+        });
+    }
+    }, [playing]); // Empty dependency array to run only once
 
     return (
         <View style={styles.container}>
